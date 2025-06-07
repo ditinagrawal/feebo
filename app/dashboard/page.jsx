@@ -1,19 +1,9 @@
-"use client";
-
-import { signOut } from "next-auth/react";
-
-import { useUser } from "@/hooks/use-user";
-import { Button } from "@/components/ui/button";
+import { MainLayout } from "@/components/dashboard/main-layout";
 
 const DashboardPage = () => {
-  const { user } = useUser();
   return (
-    <div>
-      <h1>Dashboard</h1>
-      <p>
-        Welcome, {user?.name} : {user?.slug}
-      </p>
-      <Button onClick={() => signOut()}>Logout</Button>
+    <div className="px-4 lg:px-6">
+      <MainLayout />
     </div>
   );
 };
