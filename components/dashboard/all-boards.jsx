@@ -37,7 +37,7 @@ export const AllBoards = () => {
 
 const BoardCard = ({ board }) => {
   return (
-    <Link href={board.slug}>
+    <Link href={`/dashboard/b/${board.slug}`}>
       <Card>
         <CardHeader>
           <CardTitle>{board.name}</CardTitle>
