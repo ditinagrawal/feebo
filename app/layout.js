@@ -1,8 +1,9 @@
 import { Kanit } from "next/font/google";
 import "./globals.css";
 
-import { ThemeProvider } from "@/components/providers/theme-provider";
 import { AuthProvider } from "@/components/providers/auth-provider";
+import { TanstackProvider } from "@/components/providers/tanstack-provider";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 
 const kanit = Kanit({
   weight: ["400", "500", "700", "900"],
@@ -26,7 +27,7 @@ export default function RootLayout({ children }) {
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <TanstackProvider>{children}</TanstackProvider>
           </ThemeProvider>
         </AuthProvider>
       </body>
