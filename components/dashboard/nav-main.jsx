@@ -10,18 +10,13 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { LayoutDashboardIcon, User } from "lucide-react";
+import { LayoutDashboardIcon } from "lucide-react";
 
 const items = [
   {
     title: "Dashboard",
     href: "/dashboard",
     icon: LayoutDashboardIcon,
-  },
-  {
-    title: "Profile",
-    href: "/dashboard/profile",
-    icon: User,
   },
 ];
 
