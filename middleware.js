@@ -17,6 +17,20 @@ export default auth((req) => {
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
   const isPublicRoute = publicRoutes.some((route) => {
+    if (route.includes(":")) {
+      // Convert route pattern to regex
+      const pattern = route
+        .split("/")
+        .map((segment) => {
+          if (segment.startsWith(":")) {
+            return "[^/]+"; // Match any non-slash characters
+          }
+          return segment;
+        })
+        .join("/");
+      const regex = new RegExp(`^${pattern}$`);
+      return regex.test(nextUrl.pathname);
+    }
     if (route.includes("(.*)")) {
       const baseRoute = route.replace("(.*)", "");
       return nextUrl.pathname.startsWith(baseRoute);

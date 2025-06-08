@@ -12,6 +12,17 @@ import { ScrollArea } from "../ui/scroll-area";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteFeedback } from "@/actions/feedback";
 import { toast } from "sonner";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../ui/alert-dialog";
 
 export const Feedbacks = ({ feedbacks }) => {
   return (
@@ -55,15 +66,36 @@ const FeedbackCard = ({ feedback }) => {
       </CardHeader>
       <CardFooter className="flex justify-between items-center">
         <Badge variant="outline">{feedback.votes} Votes</Badge>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="text-red-500 hover:bg-red-500/10 cursor-pointer"
-          onClick={() => handleDeleteFeedback(feedback.id)}
-          disabled={isPending}
-        >
-          <Trash />
-        </Button>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-red-500 hover:bg-red-500/10 cursor-pointer"
+              disabled={isPending}
+            >
+              <Trash />
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete the
+                feedback "{feedback.title}".
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={() => handleDeleteFeedback(feedback.id)}
+                className="bg-red-500 hover:bg-red-600 text-white"
+              >
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </CardFooter>
     </Card>
   );
