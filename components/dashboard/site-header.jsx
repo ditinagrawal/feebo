@@ -1,6 +1,9 @@
 import { ModeToggle } from "@/components/shared/mode-toggle";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { ExternalLink } from "lucide-react";
+import Link from "next/link";
+import { Button } from "../ui/button";
 
 export function SiteHeader() {
   return (
@@ -12,7 +15,20 @@ export function SiteHeader() {
           className="mx-2 data-[orientation=vertical]:h-4"
         />
       </div>
-      <div className="me-6">
+      <div className="me-6 flex items-center gap-2">
+        <Link
+          href="https://feebo.vercel.app/ditin-agrawal/feebo"
+          target="_blank"
+        >
+          <Button
+            variant="link"
+            size="sm"
+            className="text-sm flex items-center gap-2 cursor-pointer hover:underline"
+          >
+            Feedback
+            <ExternalLink className="h-4 w-4" />
+          </Button>
+        </Link>
         <ModeToggle />
       </div>
     </header>
