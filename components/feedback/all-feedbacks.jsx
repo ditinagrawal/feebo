@@ -7,6 +7,13 @@ import {
   CardTitle,
 } from "../ui/card";
 import { ScrollArea } from "../ui/scroll-area";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { updateFeedbackVotes } from "@/actions/feedback";
+import { toast } from "sonner";
+import { Button } from "../ui/button";
+import { ArrowBigUp } from "lucide-react";
+import { useParams } from "next/navigation";
+import { useState } from "react";
 
 export const AllFeedbacks = ({ feedbacks }) => {
   return (
@@ -24,6 +31,29 @@ export const AllFeedbacks = ({ feedbacks }) => {
 };
 
 const FeedbackCard = ({ feedback }) => {
+  const { username, slug: boardSlug } = useParams();
+  const queryClient = useQueryClient();
+  const [isVoted, setIsVoted] = useState(false);
+
+  const { mutate: updateVotes, isPending } = useMutation({
+    mutationFn: ({ id, increment }) => updateFeedbackVotes(id, increment),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["feedbacks", username, boardSlug],
+      });
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to update vote");
+      // Revert the vote state on error
+      setIsVoted(!isVoted);
+    },
+  });
+
+  const handleVote = () => {
+    setIsVoted(!isVoted);
+    updateVotes({ id: feedback.id, increment: !isVoted });
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -33,7 +63,20 @@ const FeedbackCard = ({ feedback }) => {
         </CardDescription>
       </CardHeader>
       <CardFooter className="flex justify-between items-center">
-        <Badge variant="outline">{feedback.votes} Votes</Badge>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            className={`hover:bg-primary/10 transition-colors ${
+              isVoted ? "text-primary" : "text-muted-foreground"
+            }`}
+            onClick={handleVote}
+            disabled={isPending}
+          >
+            <ArrowBigUp className="w-5 h-5" />
+          </Button>
+          <Badge variant="outline">{feedback.votes} Votes</Badge>
+        </div>
       </CardFooter>
     </Card>
   );

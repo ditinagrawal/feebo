@@ -61,3 +61,30 @@ export const deleteFeedback = async (id) => {
   await db();
   await Feedback.findByIdAndDelete(id);
 };
+
+export const updateFeedbackVotes = async (id, increment) => {
+  await db();
+  const feedback = await Feedback.findById(id);
+  if (!feedback) {
+    throw new Error("Feedback not found");
+  }
+
+  // Prevent negative votes
+  if (!increment && feedback.votes <= 0) {
+    return {
+      id: feedback._id.toString(),
+      votes: 0,
+    };
+  }
+
+  const updatedFeedback = await Feedback.findByIdAndUpdate(
+    id,
+    { $inc: { votes: increment ? 1 : -1 } },
+    { new: true }
+  );
+
+  return {
+    id: updatedFeedback._id.toString(),
+    votes: updatedFeedback.votes,
+  };
+};

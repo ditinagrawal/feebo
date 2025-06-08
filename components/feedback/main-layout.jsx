@@ -6,6 +6,7 @@ import { getFeedbacks } from "@/actions/feedback";
 import { useQuery } from "@tanstack/react-query";
 import { AllFeedbacks } from "./all-feedbacks";
 import { CreateFeedback } from "./create-feedback";
+import { Loading } from "../ui/loading";
 
 export const MainLayout = () => {
   const { username, slug: boardSlug } = useParams();
@@ -17,7 +18,7 @@ export const MainLayout = () => {
     refetchInterval: 1000,
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
 
   return (
     <main className="grid grid-cols-1 gap-8 md:grid-cols-3 mt-4 md:mt-12">
