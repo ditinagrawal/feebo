@@ -76,14 +76,8 @@ export const Login = () => {
 
         <div className="px-6 mt-4">
           <p className="text-muted-foreground text-sm">
-            By continuing, you agree to our{" "}
-            <Link href="/tos" className="underline">
-              Terms of Service
-            </Link>{" "}
-            and{" "}
-            <Link href="/privacy-policy" className="underline">
-              Privacy Policy
-            </Link>
+            We care about your privacy, so we'll never share your data with
+            anyone.
           </p>
         </div>
       </form>
