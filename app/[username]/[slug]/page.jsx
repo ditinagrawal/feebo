@@ -7,7 +7,7 @@ export const metadata = {
   openGraph: {
     title: "Feedback | Feebo",
     description: "View and manage your Feebo feedback.",
-    type: "feedback",
+    type: "website",
     locale: "en_US",
     siteName: "Feebo",
   },
