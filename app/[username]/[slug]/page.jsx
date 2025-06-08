@@ -1,4 +1,4 @@
-import { MainLayout } from "@/components/dashboard/main-layout";
+import { MainLayout } from "@/components/feedback/main-layout";
 import { Suspense } from "react";
 
 export const metadata = {
