@@ -17,8 +17,9 @@ import {
 } from "../ui/card";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
+import { toast } from "sonner";
 
-export const CreateFeedback = ({ slug }) => {
+export const CreateFeedback = ({ username, boardSlug }) => {
   const queryClient = useQueryClient();
 
   const [title, setTitle] = useState("");
@@ -26,13 +27,24 @@ export const CreateFeedback = ({ slug }) => {
 
   const { mutate, isPending } = useMutation({
     mutationFn: async () => {
-      const feedback = await createFeedback(slug, title, description);
+      const feedback = await createFeedback(
+        username,
+        boardSlug,
+        title,
+        description
+      );
       return feedback;
     },
     onSuccess: () => {
       setTitle("");
       setDescription("");
-      queryClient.invalidateQueries({ queryKey: ["feedbacks", slug] });
+      queryClient.invalidateQueries({
+        queryKey: ["feedbacks", username, boardSlug],
+      });
+      toast.success("Feedback submitted successfully");
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to submit feedback");
     },
   });
 

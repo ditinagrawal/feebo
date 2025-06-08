@@ -15,9 +15,11 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
+import { useUser } from "@/hooks/use-user";
 
 export const BoardDetails = ({ board }) => {
   const router = useRouter();
+  const { user } = useUser();
   const { mutate, isPending } = useMutation({
     mutationFn: deleteBoard,
     onSuccess: () => {
@@ -47,7 +49,7 @@ export const BoardDetails = ({ board }) => {
           </p>
         </div>
         <Link
-          href={`/feedback/${board.slug}`}
+          href={`/${user.slug}/${board.slug}`}
           target="_blank"
           className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary hover:underline mt-4 font-semibold"
         >

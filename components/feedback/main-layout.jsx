@@ -8,10 +8,10 @@ import { AllFeedbacks } from "./all-feedbacks";
 import { CreateFeedback } from "./create-feedback";
 
 export const MainLayout = () => {
-  const { slug } = useParams();
+  const { username, slug: boardSlug } = useParams();
   const { data: feedbacks = [], isLoading } = useQuery({
-    queryKey: ["feedbacks", slug],
-    queryFn: () => getFeedbacks(slug),
+    queryKey: ["feedbacks", username, boardSlug],
+    queryFn: () => getFeedbacks(username, boardSlug),
     refetchOnMount: true,
     refetchOnWindowFocus: true,
     refetchInterval: 1000,
@@ -22,7 +22,7 @@ export const MainLayout = () => {
   return (
     <main className="grid grid-cols-1 gap-8 md:grid-cols-3 mt-4 md:mt-12">
       <div className="md:col-span-1">
-        <CreateFeedback slug={slug} />
+        <CreateFeedback username={username} boardSlug={boardSlug} />
       </div>
       <div className="md:col-span-2">
         <AllFeedbacks feedbacks={feedbacks} />

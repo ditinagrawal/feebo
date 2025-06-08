@@ -15,6 +15,7 @@ import {
 import { Input } from "../ui/input";
 import { useUser } from "@/hooks/use-user";
 import { Loader } from "lucide-react";
+import { toast } from "sonner";
 
 export const CreateBoard = () => {
   const { user } = useUser();
@@ -30,6 +31,10 @@ export const CreateBoard = () => {
     onSuccess: () => {
       setBoardName("");
       queryClient.invalidateQueries({ queryKey: ["boards", user.id] });
+      toast.success("Board created successfully");
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to create board");
     },
   });
 

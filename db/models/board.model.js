@@ -4,7 +4,7 @@ import slugify from "slugify";
 const boardSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
-    slug: { type: String, required: true, unique: true },
+    slug: { type: String, required: true },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -17,7 +17,7 @@ const boardSchema = new mongoose.Schema(
   }
 );
 
-boardSchema.index({ userId: 1, slug: 1 }, { unique: true });
+boardSchema.index({ userId: 1, slug: 1 });
 
 boardSchema.pre("validate", function (next) {
   if (!this.slug && this.name) {

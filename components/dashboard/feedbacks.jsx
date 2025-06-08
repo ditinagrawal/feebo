@@ -11,6 +11,7 @@ import {
 import { ScrollArea } from "../ui/scroll-area";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteFeedback } from "@/actions/feedback";
+import { toast } from "sonner";
 
 export const Feedbacks = ({ feedbacks }) => {
   return (
@@ -34,6 +35,9 @@ const FeedbackCard = ({ feedback }) => {
     onSuccess: () => {
       toast.success("Feedback deleted successfully");
       queryClient.invalidateQueries({ queryKey: ["board"] });
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to delete feedback");
     },
   });
 

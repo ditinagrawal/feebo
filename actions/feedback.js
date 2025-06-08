@@ -3,10 +3,15 @@
 import { db } from "@/db/connect";
 import Board from "@/db/models/board.model";
 import Feedback from "@/db/models/feedback.model";
+import User from "@/db/models/user.model";
 
-export const getFeedbacks = async (slug) => {
+export const getFeedbacks = async (username, boardSlug) => {
   await db();
-  const board = await Board.findOne({ slug });
+  const user = await User.findOne({ slug: username });
+  if (!user) {
+    throw new Error("User not found");
+  }
+  const board = await Board.findOne({ userId: user._id, slug: boardSlug });
   if (!board) {
     throw new Error("Board not found");
   }
@@ -19,9 +24,18 @@ export const getFeedbacks = async (slug) => {
   }));
 };
 
-export const createFeedback = async (slug, title, description) => {
+export const createFeedback = async (
+  username,
+  boardSlug,
+  title,
+  description
+) => {
   await db();
-  const board = await Board.findOne({ slug });
+  const user = await User.findOne({ slug: username });
+  if (!user) {
+    throw new Error("User not found");
+  }
+  const board = await Board.findOne({ userId: user._id, slug: boardSlug });
   if (!board) {
     throw new Error("Board not found");
   }
