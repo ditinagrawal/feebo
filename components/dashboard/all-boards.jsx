@@ -7,11 +7,12 @@ import { useUser } from "@/hooks/use-user";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { ScrollArea } from "../ui/scroll-area";
+import { Loading } from "../ui/loading";
 
 export const AllBoards = () => {
   const { user } = useUser();
 
-  const { data: boards = [] } = useQuery({
+  const { data: boards = [], isLoading } = useQuery({
     queryKey: ["boards", user?.id],
     queryFn: async () => {
       const boards = await getBoards(user.id);
@@ -21,6 +22,8 @@ export const AllBoards = () => {
     refetchOnMount: true,
     refetchOnWindowFocus: true,
   });
+
+  if (isLoading) return <Loading />;
 
   return (
     <ScrollArea className="h-[calc(100vh-12rem)]">
