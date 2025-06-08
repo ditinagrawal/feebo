@@ -1,3 +1,5 @@
+"use client";
+
 import { AllBoards } from "./all-boards";
 import { CreateBoard } from "./create-board";
 

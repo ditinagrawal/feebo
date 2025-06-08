@@ -1,4 +1,5 @@
 import { MainLayout } from "@/components/dashboard/main-layout";
+import { Suspense } from "react";
 
 export const metadata = {
   title: "Feedback | Feebo",
@@ -12,7 +13,7 @@ export const metadata = {
   },
 };
 
-export const loading = () => {
+const LoadingSpinner = () => {
   return (
     <div className="flex h-screen w-full items-center justify-center">
       <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
@@ -21,7 +22,11 @@ export const loading = () => {
 };
 
 const FeedbackPage = () => {
-  return <MainLayout />;
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <MainLayout />
+    </Suspense>
+  );
 };
 
 export default FeedbackPage;
