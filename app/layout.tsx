@@ -3,6 +3,7 @@ import { EB_Garamond, Inter } from "next/font/google";
 
 import { ViewTransitions } from "next-view-transitions";
 import NextTopLoader from "nextjs-toploader";
+import { Toaster } from "react-hot-toast";
 
 import "./globals.css";
 
@@ -36,8 +37,9 @@ export default function RootLayout({
         <body
           className={`${ebGaramond.variable} ${inter.className} antialiased`}
         >
-          {children}
           <NextTopLoader color="#d97757" />
+          <Toaster />
+          {children}
         </body>
       </html>
     </ViewTransitions>
