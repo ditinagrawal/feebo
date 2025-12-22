@@ -5,6 +5,7 @@ import { ViewTransitions } from "next-view-transitions";
 import NextTopLoader from "nextjs-toploader";
 import { Toaster } from "react-hot-toast";
 
+import { TRPCReactProvider } from "@/server/client";
 import "./globals.css";
 
 const inter = Inter({
@@ -39,7 +40,7 @@ export default function RootLayout({
         >
           <NextTopLoader color="#d97757" />
           <Toaster />
-          {children}
+          <TRPCReactProvider>{children}</TRPCReactProvider>
         </body>
       </html>
     </ViewTransitions>
