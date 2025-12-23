@@ -18,6 +18,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { ProjectSwitcher } from "./project-switcher";
 
 const MENU_ITEMS = [
   {
@@ -58,6 +59,10 @@ export const Menu = () => {
   const isActive = (path: string) => pathname === path;
   return (
     <>
+      <SidebarGroup>
+        <SidebarGroupLabel>Project</SidebarGroupLabel>
+        <ProjectSwitcher />
+      </SidebarGroup>
       <SidebarGroup>
         <SidebarGroupLabel>Menu</SidebarGroupLabel>
         <SidebarMenu>
