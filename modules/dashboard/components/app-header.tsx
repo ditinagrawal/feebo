@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { MessageCircleIcon } from "lucide-react";
 import { Link } from "next-view-transitions";
 
-import { UserProfile } from "@/components/dashboard/user-profile";
+import { UserProfile } from "@/modules/dashboard/components/user-profile";
 import {
   Breadcrumb,
   BreadcrumbItem,
