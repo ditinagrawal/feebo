@@ -5,6 +5,7 @@ import slugify from "slugify";
 
 import { env } from "@/env";
 import { db } from "@/lib/db";
+import { nanoid } from "nanoid";
 
 export const auth = betterAuth({
   database: prismaAdapter(db, {
@@ -21,7 +22,7 @@ export const auth = betterAuth({
       create: {
         after: async (user) => {
           const firstName = String(user.name).split(" ")[0];
-          const slug = slugify(firstName, { lower: true });
+          const slug = `${slugify(firstName, { lower: true })}${nanoid(6)}`;
           await db.user.update({
             data: {
               slug,
