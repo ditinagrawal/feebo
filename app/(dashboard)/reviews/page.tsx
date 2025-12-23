@@ -2,6 +2,8 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 import { auth } from "@/lib/auth";
+import { ReviewsView } from "@/modules/dashboard/views/reviews-view";
+import { HydrateClient, prefetch, trpc } from "@/server/server";
 
 export default async function ReviewsPage() {
   const session = await auth.api.getSession({
@@ -10,5 +12,10 @@ export default async function ReviewsPage() {
   if (!session) {
     redirect("/auth");
   }
-  return <pre>{JSON.stringify(session, null, 2)}</pre>;
+  prefetch(trpc.project.getAllProjects.queryOptions());
+  return (
+    <HydrateClient>
+      <ReviewsView />
+    </HydrateClient>
+  );
 }
