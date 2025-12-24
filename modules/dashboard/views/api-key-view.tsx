@@ -4,16 +4,23 @@ import { Button } from "@/components/ui/button";
 import { useCurrentProject } from "@/modules/dashboard/store/use-current-project";
 import { useTRPC } from "@/server/client";
 import { useQuery } from "@tanstack/react-query";
-import { CheckCheckIcon, CopyIcon, InfoIcon } from "lucide-react";
+import {
+  CheckCheckIcon,
+  CopyIcon,
+  EyeIcon,
+  EyeOffIcon,
+  InfoIcon,
+} from "lucide-react";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 
 export const ApiKeyView = () => {
   const [isCopied, setIsCopied] = useState(false);
+  const [showKey, setShowKey] = useState(false);
   const trpc = useTRPC();
   const [currentProject, _] = useCurrentProject();
   const projectId = currentProject?.id;
-  const { data: project } = useQuery(
+  const { data: project, isLoading } = useQuery(
     trpc.project.getProjectById.queryOptions(
       { id: projectId as string },
       { enabled: !!projectId },
@@ -40,12 +47,30 @@ export const ApiKeyView = () => {
           </div>
           <div className="flex">
             <input
-              type="password"
-              value={project?.key ?? ""}
+              type={showKey ? "text" : "password"}
+              value={project?.key ?? "***"}
               className="w-full flex-1 outline-none"
               readOnly
             />
-            <Button variant="outline" size="icon" onClick={handleCopy}>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => setShowKey(!showKey)}
+              className="me-3"
+              disabled={isLoading}
+            >
+              {showKey ? (
+                <EyeIcon className="size-4" />
+              ) : (
+                <EyeOffIcon className="size-4" />
+              )}
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={handleCopy}
+              disabled={isLoading}
+            >
               {isCopied ? (
                 <CheckCheckIcon className="size-4" />
               ) : (

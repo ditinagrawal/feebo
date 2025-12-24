@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -14,7 +12,7 @@ import { useTRPC } from "@/server/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
-import { useCreateProjectModal } from "../store/use-create-project-modal";
+import { useCreateProjectModal } from "../../store/use-create-project-modal";
 
 export const CreateProjectModal = () => {
   const [projectName, setProjectName] = useState("");
