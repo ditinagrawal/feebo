@@ -16,9 +16,24 @@ export const projectRouter = createTRPCRouter({
       where: {
         userId: ctx.session.user.id,
       },
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+      },
       orderBy: {
         createdAt: "desc",
       },
+    });
+  }),
+
+  // Get a single project by id
+  getProjectById: protectedProcedure.input(z.object({ id: z.string() })).query(async ({ ctx, input }) => {
+    if (!ctx.session?.user.id) {
+      throw new TRPCError({ code: "UNAUTHORIZED" });
+    }
+    return ctx.db.project.findUnique({
+      where: { id: input.id, userId: ctx.session.user.id },
     });
   }),
 

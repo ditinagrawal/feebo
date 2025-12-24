@@ -18,7 +18,11 @@ export const ReviewsView = () => {
   useEffect(() => {
     if (isLoading || isFetching) return;
     if (projectId) {
-      setCurrentProject(data?.[0] ?? null);
+      setCurrentProject({
+        id: data?.[0]?.id ?? "",
+        name: data?.[0]?.name ?? "",
+        slug: data?.[0]?.slug ?? "",
+      });
     } else if (!open) {
       setOpen(true);
     }
