@@ -1,10 +1,15 @@
 "use client";
 
-import { atom, useAtom } from "jotai";
+import { useAtom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
 
-import { Project } from "@/lib/generated/prisma/client";
+interface CurrentProject {
+  id: string;
+  name: string;
+  slug: string;
+}
 
-const currentProjectState = atom<Project | null>(null);
+const currentProjectState = atomWithStorage<CurrentProject | null>("current-project", null);
 
 export const useCurrentProject = () => {
   return useAtom(currentProjectState);

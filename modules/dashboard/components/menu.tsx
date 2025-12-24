@@ -48,8 +48,8 @@ const DEVELOPER_MENU_ITEMS = [
     icon: <BookIcon />,
   },
   {
-    label: "Api Keys",
-    href: "/api-keys",
+    label: "Api Key",
+    href: "/api-key",
     icon: <KeyIcon />,
   },
 ];
