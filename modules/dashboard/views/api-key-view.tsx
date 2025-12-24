@@ -12,11 +12,12 @@ export const ApiKeyView = () => {
   const [isCopied, setIsCopied] = useState(false);
   const trpc = useTRPC();
   const [currentProject, _] = useCurrentProject();
-  if (!currentProject) {
-    return null;
-  }
+  const projectId = currentProject?.id;
   const { data: project } = useQuery(
-    trpc.project.getProjectById.queryOptions({ id: currentProject.id }),
+    trpc.project.getProjectById.queryOptions(
+      { id: projectId as string },
+      { enabled: !!projectId },
+    ),
   );
   const handleCopy = () => {
     setIsCopied(true);
@@ -40,7 +41,7 @@ export const ApiKeyView = () => {
           <div className="flex">
             <input
               type="password"
-              value={project?.key}
+              value={project?.key ?? ""}
               className="w-full flex-1 outline-none"
               readOnly
             />
