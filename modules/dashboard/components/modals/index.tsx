@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { CreateProjectModal } from "./create-project-modal";
 import { DeleteUserModal } from "./delete-user-modal";
+import { FeedbackModal } from "./feedback-modal";
 import { UpdateUsernameModal } from "./update-username-modal";
 
 export const Modal = () => {
@@ -16,6 +17,7 @@ export const Modal = () => {
       <UpdateUsernameModal />
       <CreateProjectModal />
       <DeleteUserModal />
+      <FeedbackModal />
     </>
   );
 };

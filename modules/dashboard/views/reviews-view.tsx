@@ -6,6 +6,7 @@ import { useEffect, useMemo } from "react";
 import { useCreateProjectModal } from "@/modules/dashboard/store/use-create-project-modal";
 import { useCurrentProject } from "@/modules/dashboard/store/use-current-project";
 import { useTRPC } from "@/server/client";
+import { ReviewsList } from "../components/reviews-list";
 
 export const ReviewsView = () => {
   const trpc = useTRPC();
@@ -27,5 +28,10 @@ export const ReviewsView = () => {
       setOpen(true);
     }
   }, [projectId, isLoading, isFetching, open, setOpen]);
-  return <div>{currentProject?.name}</div>;
+  return (
+    <div>
+      {currentProject?.name}
+      <ReviewsList />
+    </div>
+  );
 };
